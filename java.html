@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slider with Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #f3f3f3;
+    }
+
+    .slider-container {
+      max-width: 700px;
+      margin: auto;
+      position: relative;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .slide {
+      display: none;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide h2 {
+      margin-bottom: 15px;
+    }
+
+    .nav-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 0 10px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    form button[type="submit"] {
+      background-color: #28a745;
+    }
+
+    form button[type="submit"]:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slider-container">
+  <div class="slide active">
+    <h2>Welcome to Our Site</h2>
+    <p>This is the first slide. You can place any content here, like an introduction or feature.</p>
+  </div>
+
+  <div class="slide">
+    <h2>About Us</h2>
+    <p>We offer high-quality products and services. This is the second slide with more info.</p>
+  </div>
+
+  <div class="slide">
+    <h2>Contact Us</h2>
+    <form onsubmit="submitForm(event)">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <div class="nav-buttons">
+    <button onclick="changeSlide(-1)">❮ Prev</button>
+    <button onclick="changeSlide(1)">Next ❯</button>
+  </div>
+</div>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slideIndex = (n + slides.length) % slides.length;
+    slides[slideIndex].classList.add('active');
+  }
+
+  function changeSlide(n) {
+    showSlide(slideIndex + n);
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    alert(`Message sent!\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+    event.target.reset();
+  }
+</script>
+
+</body>
+</html>
